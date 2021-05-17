@@ -6,7 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     Image
-} from 'react-native';
+} from 'react-native'
+import Geolocation from '@react-native-community/geolocation'
 import md5 from 'md5'
 
 class Connexion extends React.Component {
@@ -14,9 +15,16 @@ class Connexion extends React.Component {
         super(props) 
         this.state = {
             email: '',
-            mdp: ''
+            mdp: '',
+            latitude: '',
+            longitude: ''
         }
         
+    }
+
+    componentDidMount() {
+        Geolocation.getCurrentPosition(info => this.setState({latitude: info.coords.latitude, longitude: info.coords.longitude})) 
+
     }
 
     render(){
@@ -38,7 +46,7 @@ class Connexion extends React.Component {
                 })
                 .then((response) => {
                     if(response.status == 200) {
-                        this.props.navigation.navigate('ListeBars')
+                        this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude, longitude: this.state.longitude})
                     }
                     return response.json()
                 })
@@ -67,7 +75,7 @@ class Connexion extends React.Component {
                 </TouchableOpacity>
 
                 <Text style={styles.textConnect} onPress={() =>
-                    this.props.navigation.navigate('Inscription')
+                    this.props.navigation.navigate('Inscription', {latitude: this.state.latitude, longitude: this.state.longitude})
                 }>Inscrivez-vous</Text> 
             </View>
         );

@@ -9,7 +9,22 @@ import {
 } from 'react-native'
 
 class ListeBars extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            bars: ''
+        }
+    }
+
+    async componentDidMount() {
+        const { latitude, longitude } = this.props.route.params
+        const response = await fetch(`http://localhost:3000/listebars/${latitude}/${longitude}`)
+        const data = await response.json()
+        this.setState({bars: data})
+    }
+
     render() {
+
         return(
             <View style={styles.listeBars}>
 

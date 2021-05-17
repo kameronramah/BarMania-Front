@@ -26,6 +26,8 @@ class Inscription extends React.Component {
 
     render(){
 
+        const { latitude, longitude } = this.props.route.params
+
         const sendData = () => {
     
             if(this.state.pseudo != '' && this.state.nom != '' && this.state.prenom != '' && this.state.email != '' && this.state.mdp != '' && this.state.cmdp != '') {
@@ -48,7 +50,7 @@ class Inscription extends React.Component {
                     })
                     .then((response) => {
                         if(response.status == 200) {
-                            this.props.navigation.navigate('ListeBars')
+                            this.props.navigation.navigate('ListeBars', {latitude, longitude})
                         }
                         return response.json()
                     })

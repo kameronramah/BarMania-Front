@@ -10,7 +10,9 @@ const Stack = createStackNavigator()
 
 
 class App extends React.Component {
+
   render(){
+
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -28,7 +30,7 @@ class App extends React.Component {
               name="Inscription"
               component={Inscription}
           />
-          
+
           <Stack.Screen
               name="ListeBars"
               component={ListeBars}
