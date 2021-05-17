@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-    Text,
     View,
     StyleSheet,
     TouchableOpacity,
     Image,
     ScrollView
 } from 'react-native'
+import CelluleBar from './CelluleBar'
 
 class ListeBars extends React.Component {
     constructor(props) {
@@ -18,12 +18,17 @@ class ListeBars extends React.Component {
 
     async componentDidMount() {
         const { latitude, longitude } = this.props.route.params
-        const response = await fetch(`http://localhost:3000/listebars/${latitude}/${longitude}`)
+        const response = await fetch(`http://localhost:3001/listebars/${latitude}/${longitude}`)
         const data = await response.json()
         this.setState({bars: data})
     }
 
     render() {
+
+        let allBars = []
+        for(const y of this.state.bars) {
+            allBars.push(<CelluleBar id={y.idbar} nombar={y.nombar} adresse={`${y.rue}, ${y.ville}, ${y.codepostal}`} numerotel={y.numerotel}></CelluleBar>)
+        }
 
         return(
             <View style={styles.listeBars}>
@@ -32,11 +37,10 @@ class ListeBars extends React.Component {
                     <Image style={styles.imageProfil} source={require('../../images/user.png')}/>
                 </TouchableOpacity>
 
-                <Image style={styles.logo} source={require('../../images/logo.png')} />
+                <Image style={styles.logo} source={require('../../images/barmania_logo.png')} />
 
                 <ScrollView style={styles.scrollView}> 
-
-                    
+                    {allBars}
                 </ScrollView>
 
                 <View style={styles.viewButtons}>
@@ -92,14 +96,14 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     logo: {
-        marginTop: -35,
-        width: 250,
-        height: 140,
-        margin: 'auto'
+        marginTop: -55,
+        width: 240,
+        height: 150,
+        margin: 'auto',
+        resizeMode: 'contain'
     },
     scrollView: {
-        border: '1px solid black',
-        marginTop: -20,
+        marginTop: -5,
         height: 430
     },
     viewButtons: {
@@ -142,38 +146,10 @@ const styles = StyleSheet.create({
         height: 38,
         resizeMode: 'contain'
     },
-
-    textInput: {
-        backgroundColor: '#73B479',
-        height: 40,
-        width: '70%',
-        marginBottom: 20,
-        color: '#fff',
-        borderBottomColor: 'white',
-        borderBottomWidth: 2,
-        placeholderTextColor: 'white',
-        margin: 'auto'
-    },
-    button: {
-        textAlign: 'center',
-        backgroundColor: 'white',
-        marginTop: 30,
-        width: 150,
-        height: 50,
-        margin: 'auto',
-        padding: 15,
-        borderRadius: 40
-    }, 
-    btnText: {
-        color: 'black',
-        fontWeight: 'bold'
-    },
-    textConnect: {
-        fontSize: 17,
-        marginTop: 40,
-        color: 'white',
-        textAlign: 'center',
-        textDecorationLine: 'underline',
-        paddingBottom: 30
+    tableauBars: {
+        border: '1px solid black',
+        display: 'flex',
+        flexDirection: 'row'
     }
+    
 })

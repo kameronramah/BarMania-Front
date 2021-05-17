@@ -36,7 +36,7 @@ class Connexion extends React.Component {
                     "mdp": md5(this.state.mdp)
                 }
 
-                fetch("http://localhost:3000/connexion", {
+                fetch("http://localhost:3001/connexion", {
                     method: "POST",
                     headers: {
                         'Accept': 'application/json',
@@ -61,7 +61,7 @@ class Connexion extends React.Component {
 
         return(
             <View>
-                <Image style={styles.logo} source={require('../../images/logo.png')} />
+                <Image style={styles.logo} source={require('../../images/barmania_logo.png')} />
 
                 <TextInput onChangeText={text => this.setState({ email: text})} style={styles.textInput} placeholder="Email"/>
 
@@ -87,9 +87,10 @@ export default Connexion
 const styles = StyleSheet.create({
     logo: {
         width: 250,
-        height: 140,
+        height: 160,
         margin: 'auto',
-        marginBottom: 30
+        marginBottom: 20,
+        resizeMode: 'contain'
     },
     textInput: {
         backgroundColor: '#73B479',

@@ -40,7 +40,7 @@ class Inscription extends React.Component {
                         "mdp": md5(this.state.mdp)
                     }
             
-                    fetch("http://localhost:3000/", {
+                    fetch("http://localhost:3001/", {
                         method: "POST",
                         headers: {
                             'Accept': 'application/json',
@@ -70,7 +70,7 @@ class Inscription extends React.Component {
 
         return(
             <View>
-                <Image style={styles.logo} source={require('../../images/logo.png')} />
+                <Image style={styles.logo} source={require('../../images/barmania_logo.png')} />
 
                 <TextInput onChangeText={text => this.setState({ pseudo: text})} style={styles.textInput} placeholder="Pseudo"/>
 
@@ -104,8 +104,10 @@ export default Inscription
 const styles = StyleSheet.create({
     logo: {
         width: 250,
-        height: 140,
-        margin: 'auto'
+        height: 160,
+        margin: 'auto',
+        marginBottom: -10,
+        resizeMode: 'contain'
     },
     textInput: {
         backgroundColor: '#73B479',
