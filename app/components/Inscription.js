@@ -20,38 +20,69 @@ class Inscription extends React.Component {
           mdp: '',
           cmdp: ''
         }
+       
     }
 
-    
 
     render(){
 
-        function sendData() {
-            alert('test')
+        const sendData = () => {
+    
+            if(this.state.pseudo != '' && this.state.nom != '' && this.state.prenom != '' && this.state.email != '' && this.state.mdp != '' && this.state.cmdp != '') {
+                if(this.state.mdp === this.state.cmdp) {
+                    let data = {
+                        "pseudo": this.state.pseudo,
+                        "nom": this.state.nom,
+                        "prenom": this.state.prenom,
+                        "email": this.state.email,
+                        "mdp": md5(this.state.mdp)
+                    }
+            
+                    fetch("http://localhost:3000/", {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body:  JSON.stringify(data)
+                    })
+                    .then((response) => {
+                        if(response.status == 200) {
+                            this.props.navigation.navigate('ListeBars')
+                        }
+                        return response.json()
+                    })
+                    .then(function(data) {
+                        alert(data)
+                    })
+                }
+                else {
+                    alert('Les mots de passes ne sont pas identiques.')
+                }
+            }
+            else {
+                alert('Tous les champs ne sont pas remplis.')
+            }
+                          
         }
 
-        console.log(this.state.mdp)
         return(
             <View style={styles.inscription}>
                 <Image style={styles.logo} source={require('../../images/logo.png')} />
 
-                <TextInput onChangeText={text => this.setState({ pseudo: text})} style={styles.textInput} placeholder="Pseudo"
-                underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ pseudo: text})} style={styles.textInput} placeholder="Pseudo"/>
 
-                <TextInput onChangeText={text => this.setState({ nom: text})} style={styles.textInput} placeholder="Nom"
-                underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ nom: text})} style={styles.textInput} placeholder="Nom"/>
 
-                <TextInput onChangeText={text => this.setState({ prenom: text})} style={styles.textInput} placeholder="Prenom"
-                underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ prenom: text})} style={styles.textInput} placeholder="Prenom"/>
 
-                <TextInput onChangeText={text => this.setState({ email: text})} style={styles.textInput} placeholder="Email"
-                underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ email: text})} style={styles.textInput} placeholder="Email"/>
 
-                <TextInput onChangeText={text => this.setState({ mdp: md5(text)})} style={styles.textInput} placeholder="Mot de passe"
-                secureTextEntry={true} underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ mdp: text})} style={styles.textInput} placeholder="Mot de passe"
+                secureTextEntry={true}/>
 
-                <TextInput onChangeText={text => this.setState({ cmdp: md5(text)})} style={styles.textInput} placeholder="Confirmer mot de passe"
-                secureTextEntry={true} underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ cmdp: text})} style={styles.textInput} placeholder="Confirmer mot de passe"
+                secureTextEntry={true}/>
 
                 <TouchableOpacity onPress={sendData} style={styles.button}>
                     <Text style={styles.btnText}>INSCRIPTION</Text>
@@ -61,7 +92,7 @@ class Inscription extends React.Component {
                     this.props.navigation.navigate('Connexion')
                 }>Connectez-vous</Text> 
             </View>
-        );
+        )
     }
 }
 

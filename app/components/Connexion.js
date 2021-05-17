@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     StyleSheet,
     Text,
@@ -7,22 +7,62 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
+import md5 from 'md5'
 
 class Connexion extends React.Component {
+    constructor(props) {
+        super(props) 
+        this.state = {
+            email: '',
+            mdp: ''
+        }
+        
+    }
+
     render(){
+
+        const connect = () => {
+            if(this.state.email != '' && this.state.mdp != '') {
+                let data = {
+                    "email": this.state.email,
+                    "mdp": md5(this.state.mdp)
+                }
+
+                fetch("http://localhost:3000/connexion", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body:  JSON.stringify(data)
+                })
+                .then((response) => {
+                    if(response.status == 200) {
+                        this.props.navigation.navigate('ListeBars')
+                    }
+                    return response.json()
+                })
+                .then(function(data) {
+                    alert(data)
+                })
+            }
+            else {
+                alert('Tous les champs ne sont pas remplis.')
+            }
+        }
+
         return(
             <View style={styles.connexion}>
                 <Image style={styles.logo} source={require('../../images/logo.png')} />
 
-                <TextInput style={styles.textInput} placeholder="Pseudo"
-                underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ email: text})} style={styles.textInput} placeholder="Email"/>
 
-                <TextInput style={styles.textInput} placeholder="Mot de passe"
-                secureTextEntry={true} underlineColorAndroid={'transparent'}/>
+                <TextInput onChangeText={text => this.setState({ mdp: text})} style={styles.textInput} placeholder="Mot de passe"
+                secureTextEntry={true} />
 
                 <Text style={styles.forgetPassword}>Mot de passe oublié ?</Text>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={connect} style={styles.button}>
                     <Text style={styles.btnText}>CONNEXION</Text>
                 </TouchableOpacity>
 
