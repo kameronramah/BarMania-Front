@@ -67,7 +67,7 @@ class Inscription extends React.Component {
         }
 
         return(
-            <View style={styles.inscription}>
+            <View>
                 <Image style={styles.logo} source={require('../../images/logo.png')} />
 
                 <TextInput onChangeText={text => this.setState({ pseudo: text})} style={styles.textInput} placeholder="Pseudo"/>
@@ -100,9 +100,6 @@ export default Inscription
 
 
 const styles = StyleSheet.create({
-    inscription: {
-        backgroundColor: '#73B479'
-    },
     logo: {
         width: 250,
         height: 140,

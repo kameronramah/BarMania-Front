@@ -52,7 +52,7 @@ class Connexion extends React.Component {
         }
 
         return(
-            <View style={styles.connexion}>
+            <View>
                 <Image style={styles.logo} source={require('../../images/logo.png')} />
 
                 <TextInput onChangeText={text => this.setState({ email: text})} style={styles.textInput} placeholder="Email"/>
@@ -77,9 +77,6 @@ class Connexion extends React.Component {
 export default Connexion
 
 const styles = StyleSheet.create({
-    connexion: {
-        backgroundColor: '#73B479'
-    },
     logo: {
         width: 250,
         height: 140,

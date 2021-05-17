@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Connexion from './app/components/Connexion';
@@ -16,21 +15,26 @@ class App extends React.Component {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerShown: false
+            headerShown: false,
+            cardStyle: { backgroundColor: '#73B479' }
           }}
         >
-          <Stack.Screen
-              name="Inscription"
-              component={Inscription}
-          />
           <Stack.Screen
               name="Connexion"
               component={Connexion}
           />
+
+          <Stack.Screen
+              name="Inscription"
+              component={Inscription}
+          />
+          
           <Stack.Screen
               name="ListeBars"
               component={ListeBars}
           />
+          
+          
         </Stack.Navigator>
       </NavigationContainer>
     )
@@ -38,27 +42,3 @@ class App extends React.Component {
 }
 
 export default App
-
-// function MyStack(){
-//   return(
-//     <Stack.Navigator>
-     
-//       <Stack.Screen name="connexion" component={Connexion} />
-
-     
-//     </Stack.Navigator>
-//   );
-// }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#90EE90',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 60,
-    paddingRight: 60,
-  },
-});
-
