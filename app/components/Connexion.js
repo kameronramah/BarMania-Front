@@ -44,9 +44,11 @@ class Connexion extends React.Component {
                     },
                     body:  JSON.stringify(data)
                 })
-                .then((response) => {
+                .then( async(response) => {
                     if(response.status == 200) {
-                        this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude, longitude: this.state.longitude})
+                        const rep = await fetch(`http://localhost:3001/infosUser/${this.state.email}`)
+                        const data = await rep.json()
+                        this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: data.pseudo, email: data.email, password: data.password})
                     }
                     return response.json()
                 })

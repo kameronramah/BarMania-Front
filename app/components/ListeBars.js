@@ -9,19 +9,39 @@ import {
 import CelluleBar from './CelluleBar'
 
 class ListeBars extends React.Component {
+
     constructor(props) {
         super(props)
         this.state = {
-            bars: ''
+            bars: '',
+            pseudo: '',
+            email: '',
+            password: '',
+            latitude: '',
+            longitude: ''
         }
     }
 
     async componentDidMount() {
-        const { latitude, longitude } = this.props.route.params
+        const { latitude, longitude, pseudo, email, password } = this.props.route.params
         const response = await fetch(`http://localhost:3001/listebars/${latitude}/${longitude}`)
         const data = await response.json()
-        this.setState({bars: data})
+        this.setState({bars: data, pseudo, email, password, latitude, longitude})
     }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.route.params.pseudo !== prevProps.route.params.pseudo) {
+            this.setState({pseudo: this.props.route.params.pseudo})
+        }
+        if(this.props.route.params.email !== prevProps.route.params.email) {
+            this.setState({email: this.props.route.params.email})
+        }
+        if(this.props.route.params.password !== prevProps.route.params.password) {
+            this.setState({password: this.props.route.params.password})
+        }
+        
+    }
+
 
     render() {
 
@@ -33,7 +53,10 @@ class ListeBars extends React.Component {
         return(
             <View style={styles.listeBars}>
 
-                <TouchableOpacity style={styles.btnProfil}>
+                <TouchableOpacity 
+                    onPress={() =>
+                        this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})}
+                    style={styles.btnProfil}>
                     <Image style={styles.imageProfil} source={require('../../images/user.png')}/>
                 </TouchableOpacity>
 

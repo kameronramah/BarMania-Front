@@ -44,13 +44,13 @@ class Inscription extends React.Component {
                         method: "POST",
                         headers: {
                             'Accept': 'application/json',
-                            'Content-Type': 'application/json',
+                            'Content-Type': 'application/json'
                         },
                         body:  JSON.stringify(data)
                     })
-                    .then((response) => {
+                    .then(async (response) => {
                         if(response.status == 200) {
-                            this.props.navigation.navigate('ListeBars', {latitude, longitude})
+                            this.props.navigation.navigate('ListeBars', {latitude: latitude,longitude: longitude, pseudo: this.state.pseudo, email: this.state.email, password: md5(this.state.mdp)})
                         }
                         return response.json()
                     })
@@ -95,7 +95,7 @@ class Inscription extends React.Component {
                 }>Connectez-vous</Text> 
             </View>
         )
-    }
+    }   
 }
 
 export default Inscription
