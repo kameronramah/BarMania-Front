@@ -7,8 +7,9 @@ import {
     ScrollView
 } from 'react-native'
 import CelluleBar from './CelluleBar'
+import CelluleEvenement from './CelluleEvenement'
 
-class ListeBars extends React.Component {
+class Evenements extends React.Component {
 
     constructor(props) {
         super(props)
@@ -24,9 +25,10 @@ class ListeBars extends React.Component {
 
     async componentDidMount() {
         const { latitude, longitude, pseudo, email, password } = this.props.route.params
-        const response = await fetch(`http://localhost:3001/listebars/${latitude}/${longitude}`)
+        const response = await fetch(`http://localhost:3001/liste_evenements/${latitude}/${longitude}`)
         const data = await response.json()
         this.setState({bars: data, pseudo, email, password, latitude, longitude})
+        console.log(this.state.bars)
     }
 
     componentDidUpdate(prevProps) {
@@ -48,6 +50,7 @@ class ListeBars extends React.Component {
         let allBars = []
         for(const y of this.state.bars) {
             allBars.push(<CelluleBar id={y.idbar} nombar={y.nombar} adresse={`${y.rue}, ${y.ville}, ${y.codepostal}`} numerotel={y.numerotel}></CelluleBar>)
+            allBars.push(<CelluleEvenement id={y.idevenement} nomevenement={y.nomevenement} horaire={y.heure} nbInscrit={y.nbpersonneinscrit} limiteInscrit={y.limitepersonne}></CelluleEvenement>)
         }
 
         return(
@@ -68,14 +71,14 @@ class ListeBars extends React.Component {
 
                 <View style={styles.viewButtons}>
 
-                    <View style={styles.borderBottomWhite}>
-                        <TouchableOpacity style={styles.btnMenu}>
+                    <View>
+                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('ListeBars')}>
                             <Image style={styles.imageCocktail} source={require('../../images/cocktail.png')}/>
                         </TouchableOpacity>
                     </View>
 
-                    <View>
-                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('Evenements', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})}>
+                    <View style={styles.borderBottomWhite}>
+                        <TouchableOpacity style={styles.btnMenu}>
                             <Image style={styles.imageEvenement} source={require('../../images/fete.png')}/>
                         </TouchableOpacity>
                     </View>
@@ -99,7 +102,7 @@ class ListeBars extends React.Component {
     }
 }
 
-export default ListeBars
+export default Evenements
 
 const styles = StyleSheet.create({
 

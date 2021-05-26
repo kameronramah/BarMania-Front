@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Connexion from './app/components/Connexion';
 import Inscription from './app/components/Inscription';
 import ListeBars from './app/components/ListeBars';
+import Evenements from './app/components/Evenements'
 import MotdePasseOublier from './app/components/motdePasseOublier';
 import Profil from './app/components/Profil'
 import ChangerMdp from './app/components/ChangerMdp'
@@ -38,7 +39,12 @@ class App extends React.Component {
               name="ListeBars"
               component={ListeBars}
           />
-          
+
+          <Stack.Screen
+              name="Evenements"
+              component={Evenements}
+          />
+
           <Stack.Screen
               name="Profil"
               component={Profil}
