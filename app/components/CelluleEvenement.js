@@ -13,7 +13,8 @@ const CelluleEvenement = (props) => {
     function inscrire() {
         let data = {
             "email": props.email,
-            "idEvenement": props.id
+            "idEvenement": props.id,
+            "nbInscrit": props.nbInscrit
         }
 
         fetch("http://localhost:3001/inscriptionEvenement/", {
@@ -35,7 +36,9 @@ const CelluleEvenement = (props) => {
 
     function desinscrire() {
         let data = {
-            "email": props.email
+            "email": props.email,
+            "idEvenement": props.id,
+            "nbInscrit": props.nbInscrit
         }
 
         fetch("http://localhost:3001/desinscriptionEvenement/", {
