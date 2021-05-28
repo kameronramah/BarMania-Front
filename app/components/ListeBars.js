@@ -17,16 +17,17 @@ class ListeBars extends React.Component {
             pseudo: '',
             email: '',
             password: '',
+            idEvenement: '',
             latitude: '',
             longitude: ''
         }
     }
 
     async componentDidMount() {
-        const { latitude, longitude, pseudo, email, password } = this.props.route.params
+        const { latitude, longitude, pseudo, email, password, idEvenement } = this.props.route.params
         const response = await fetch(`http://localhost:3001/listebars/${latitude}/${longitude}`)
         const data = await response.json()
-        this.setState({bars: data, pseudo, email, password, latitude, longitude})
+        this.setState({bars: data, pseudo, email, password, latitude, longitude, idEvenement})
     }
 
     componentDidUpdate(prevProps) {
@@ -38,6 +39,9 @@ class ListeBars extends React.Component {
         }
         if(this.props.route.params.password !== prevProps.route.params.password) {
             this.setState({password: this.props.route.params.password})
+        }
+        if(this.props.route.params.idEvenement !== prevProps.route.params.idEvenement) {
+            this.setState({idEvenement: this.props.route.params.idEvenement})
         }
         
     }
@@ -55,7 +59,7 @@ class ListeBars extends React.Component {
 
                 <TouchableOpacity 
                     onPress={() =>
-                        this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})}
+                        this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})}
                     style={styles.btnProfil}>
                     <Image style={styles.imageProfil} source={require('../../images/user.png')}/>
                 </TouchableOpacity>
@@ -75,13 +79,13 @@ class ListeBars extends React.Component {
                     </View>
 
                     <View>
-                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('Evenements', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('Evenements', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})}>
                             <Image style={styles.imageEvenement} source={require('../../images/fete.png')}/>
                         </TouchableOpacity>
                     </View>
 
                     <View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})} style={styles.btnMenu}>
+                        <TouchableOpacity style={styles.btnMenu}>
                             <Image style={styles.imageCarte} source={require('../../images/position.png')}/>
                         </TouchableOpacity>
                     </View>

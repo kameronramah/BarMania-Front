@@ -17,14 +17,15 @@ class ChangerMdp extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
+            idEvenement: '',
             latitude: '',
             longitude: ''
         }
     }
 
     componentDidMount() {
-        const { pseudo, email, password, latitude, longitude } = this.props.route.params
-        this.setState({pseudo, email, password, latitude, longitude})
+        const { pseudo, email, password, latitude, longitude, idEvenement } = this.props.route.params
+        this.setState({pseudo, email, password, latitude, longitude, idEvenement})
     }
 
     componentDidUpdate(prevProps) {
@@ -36,6 +37,9 @@ class ChangerMdp extends React.Component {
         }
         if(this.props.route.params.password !== prevProps.route.params.password) {
             this.setState({password: this.props.route.params.password})
+        }
+        if(this.props.route.params.idEvenement !== prevProps.route.params.idEvenement) {
+            this.setState({idEvenement: this.props.route.params.idEvenement})
         }
         
     }
@@ -60,7 +64,7 @@ class ChangerMdp extends React.Component {
                     })
                     .then(async (response) => {
                         if(response.status == 200) {
-                            this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})
+                            this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})
                         }
                         return response.json()
                     })

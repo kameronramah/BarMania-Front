@@ -50,7 +50,7 @@ class Inscription extends React.Component {
                     })
                     .then(async (response) => {
                         if(response.status == 200) {
-                            this.props.navigation.navigate('ListeBars', {latitude: latitude,longitude: longitude, pseudo: this.state.pseudo, email: this.state.email, password: md5(this.state.mdp)})
+                            this.props.navigation.navigate('ListeBars', {latitude: latitude,longitude: longitude, pseudo: this.state.pseudo, email: this.state.email, password: md5(this.state.mdp), idEvenement: null})
                         }
                         return response.json()
                     })

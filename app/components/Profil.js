@@ -16,21 +16,24 @@ class Profil extends React.Component {
             pseudo: '',
             email: '',
             password: '',
+            idEvenement: '',
             latitude: '',
             longitude: ''
         }
     }
 
     componentDidMount() {
-        const { pseudo, email, password, latitude, longitude } = this.props.route.params
-        this.setState({pseudo, email, password, latitude, longitude})
+        const { pseudo, email, password, latitude, longitude, idEvenement } = this.props.route.params
+        this.setState({pseudo, email, password, latitude, longitude, idEvenement})
     }
 
     componentDidUpdate(prevProps) {
         if(this.props.route.params.password !== prevProps.route.params.password) {
             this.setState({password: this.props.route.params.password})
         }
-        console.log(this.state.password)       
+        if(this.props.route.params.idEvenement !== prevProps.route.params.idEvenement) {
+            this.setState({idEvenement: this.props.route.params.idEvenement})
+        }  
     }
 
     render() {
@@ -55,7 +58,7 @@ class Profil extends React.Component {
                     })
                     .then(async (response) => {
                         if(response.status == 200) {
-                            this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})
+                            this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})
                         }
                         return response.json()
                     })
@@ -77,7 +80,7 @@ class Profil extends React.Component {
                     })
                     .then(async (response) => {
                         if(response.status == 200) {
-                            this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude,longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})
+                            this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude,longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})
                         }
                         return response.json()
                     })
@@ -104,7 +107,7 @@ class Profil extends React.Component {
                     <TextInput onChangeText={text => this.setState({ password: text})} style={[styles.textInput, styles.textInputPassword]} editable={false} value="Mot de passe"
                     secureTextEntry={true} />
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangerMdp', {latitude: this.state.latitude,longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangerMdp', {latitude: this.state.latitude,longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})}>
 
                         <Image style={styles.image_edit} source={require('../../images/Edit.png')}/>
 

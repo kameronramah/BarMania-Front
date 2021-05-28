@@ -18,17 +18,17 @@ class Evenements extends React.Component {
             pseudo: '',
             email: '',
             password: '',
+            idEvenement: '',
             latitude: '',
             longitude: ''
         }
     }
 
     async componentDidMount() {
-        const { latitude, longitude, pseudo, email, password } = this.props.route.params
+        const { latitude, longitude, pseudo, email, password, idEvenement } = this.props.route.params
         const response = await fetch(`http://localhost:3001/liste_evenements/${latitude}/${longitude}`)
         const data = await response.json()
-        this.setState({bars: data, pseudo, email, password, latitude, longitude})
-        console.log(this.state.bars)
+        this.setState({bars: data, pseudo, email, password, latitude, longitude, idEvenement})
     }
 
     componentDidUpdate(prevProps) {
@@ -41,7 +41,9 @@ class Evenements extends React.Component {
         if(this.props.route.params.password !== prevProps.route.params.password) {
             this.setState({password: this.props.route.params.password})
         }
-        
+        if(this.props.route.params.idEvenement !== prevProps.route.params.idEvenement) {
+            this.setState({idEvenement: this.props.route.params.idEvenement})
+        }   
     }
 
 
@@ -50,7 +52,7 @@ class Evenements extends React.Component {
         let allBars = []
         for(const y of this.state.bars) {
             allBars.push(<CelluleBar id={y.idbar} nombar={y.nombar} adresse={`${y.rue}, ${y.ville}, ${y.codepostal}`} numerotel={y.numerotel}></CelluleBar>)
-            allBars.push(<CelluleEvenement id={y.idevenement} nomevenement={y.nomevenement} horaire={y.heure} nbInscrit={y.nbpersonneinscrit} limiteInscrit={y.limitepersonne}></CelluleEvenement>)
+            allBars.push(<CelluleEvenement id={y.idevenement} idEvenement={this.state.idEvenement} onIDEvenementChange={text => this.setState({idEvenement: text})} email={this.state.email} nomevenement={y.nomevenement} horaire={y.heure} nbInscrit={y.nbpersonneinscrit} limiteInscrit={y.limitepersonne}></CelluleEvenement>)
         }
 
         return(
@@ -58,7 +60,7 @@ class Evenements extends React.Component {
 
                 <TouchableOpacity 
                     onPress={() =>
-                        this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})}
+                        this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})}
                     style={styles.btnProfil}>
                     <Image style={styles.imageProfil} source={require('../../images/user.png')}/>
                 </TouchableOpacity>
@@ -84,7 +86,7 @@ class Evenements extends React.Component {
                     </View>
 
                     <View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password})} style={styles.btnMenu}>
+                        <TouchableOpacity style={styles.btnMenu}>
                             <Image style={styles.imageCarte} source={require('../../images/position.png')}/>
                         </TouchableOpacity>
                     </View>
