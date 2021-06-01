@@ -1,6 +1,6 @@
 # BARMANIA-Frontend
 
-    Barmania est une application de localisation de bar à proximité de notre position. Elle permet également de lister les différents événements que proposent ces bars afin de s'y inscrire. Ce projet est seulement la partie back-end de l'application. Veuillez retrouver le back-end ici http://github.com/LudovicEfrei/barMania-backend
+Barmania est une application de localisation de bar à proximité de notre position. Elle permet également de lister les différents événements que proposent ces bars afin de s'y inscrire. Ce projet est seulement la partie back-end de l'application. Veuillez retrouver le back-end ici http://github.com/LudovicEfrei/barMania-backend
 
 
 ### Prérequis 
