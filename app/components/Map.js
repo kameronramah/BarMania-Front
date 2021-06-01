@@ -38,7 +38,7 @@ class DisplayLatLng extends React.Component {
                       pseudo,
                       email,
                       password,
-                      idEvenement
+                      idEvenement: new Animated.Value(idEvenement)
                     })
         const response = await fetch(`https://glacial-bastion-48106.herokuapp.com/listebars/`)
         const data = await response.json()
