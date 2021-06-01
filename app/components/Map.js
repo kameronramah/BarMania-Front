@@ -52,9 +52,9 @@ class DisplayLatLng extends React.Component {
     }
 
 
-  onRegionChange(region) {
-    this.setState({ region });
-  }
+  // onRegionChange(region) {
+  //   this.setState({ region });
+  // }
 
 
   render() {
@@ -62,6 +62,7 @@ class DisplayLatLng extends React.Component {
     let allbars = []
     for(const y of this.state.bars) {
       allbars.push(<MapView.Marker 
+                      key={y.idbar}
                       coordinate={{
                         latitude: y.latitude,
                         longitude: y.longitude
@@ -83,12 +84,11 @@ class DisplayLatLng extends React.Component {
           mapType={MAP_TYPES.TERRAIN}
           style={styles.map}
           initialRegion={this.state.region}
-          onRegionChange={region => this.onRegionChange(region)}
         >
           <MapView.Marker
             coordinate={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude
+            latitude: this.state.region.latitude,
+            longitude: this.state.region.longitude
             }}
           >
             
@@ -110,17 +110,17 @@ class DisplayLatLng extends React.Component {
         <View style={styles.buttonContainer}>
 
           <TouchableOpacity
-            //onPress={() => function()}
+            onPress={() => this.props.navigation.navigate('ListeBars')}
             style={[styles.bubble, styles.button]}
           >
-            <Text style={styles.buttonText}>Button</Text>
+            <Text style={styles.buttonText}>RETOUR</Text>
           </TouchableOpacity>
 
           
 
         </View>
       </View>
-    );
+    )
   }
 }
 
