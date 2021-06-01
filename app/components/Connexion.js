@@ -26,7 +26,7 @@ class Connexion extends React.Component {
     }
 
     getLocationAsync = async () => {
-        Location.setGoogleApiKey('AIzaSyDiGxBLu5mbje7UF4UOzeKfNVwGkU17LGE')
+        Location.setGoogleApiKey(process.env.API_KEY)
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         if (status !== 'granted') {
           this.setState({
