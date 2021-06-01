@@ -26,7 +26,7 @@ class Evenements extends React.Component {
 
     async componentDidMount() {
         const { latitude, longitude, pseudo, email, password, idEvenement } = this.props.route.params
-        const response = await fetch(`http://localhost:3001/liste_evenements/${latitude}/${longitude}`)
+        const response = await fetch(`https://glacial-bastion-48106.herokuapp.com/liste_evenements/${latitude}/${longitude}`)
         const data = await response.json()
         this.setState({bars: data, pseudo, email, password, latitude, longitude, idEvenement})
     }
@@ -51,8 +51,8 @@ class Evenements extends React.Component {
 
         let allBars = []
         for(const y of this.state.bars) {
-            allBars.push(<CelluleBar id={y.idbar} nombar={y.nombar} adresse={`${y.rue}, ${y.ville}, ${y.codepostal}`} numerotel={y.numerotel}></CelluleBar>)
-            allBars.push(<CelluleEvenement id={y.idevenement} idEvenement={this.state.idEvenement} onIDEvenementChange={text => this.setState({idEvenement: text})} email={this.state.email} nomevenement={y.nomevenement} horaire={y.heure} nbInscrit={y.nbpersonneinscrit} limiteInscrit={y.limitepersonne}></CelluleEvenement>)
+            allBars.push(<CelluleBar key={y.idbar + 0.5} nombar={y.nombar} adresse={`${y.rue}, ${y.ville}, ${y.codepostal}`} numerotel={y.numerotel}></CelluleBar>)
+            allBars.push(<CelluleEvenement key={y.idevenement} id={y.idevenement} idEvenement={this.state.idEvenement} onIDEvenementChange={text => this.setState({idEvenement: text})} email={this.state.email} nomevenement={y.nomevenement} horaire={y.heure} nbInscrit={y.nbpersonneinscrit} limiteInscrit={y.limitepersonne}></CelluleEvenement>)
         }
 
         return(
@@ -86,7 +86,7 @@ class Evenements extends React.Component {
                     </View>
 
                     <View>
-                        <TouchableOpacity style={styles.btnMenu}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('Map', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})}>
                             <Image style={styles.imageCarte} source={require('../../images/position.png')}/>
                         </TouchableOpacity>
                     </View>
@@ -109,7 +109,7 @@ export default Evenements
 const styles = StyleSheet.create({
 
     btnProfil: {
-        marginTop: 12,
+        marginTop: 30,
         marginLeft: 12,
         width: 40,
         height: 40,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         marginTop: -55,
         width: 240,
         height: 150,
-        margin: 'auto',
+        marginLeft: 80,
         resizeMode: 'contain'
     },
     scrollView: {
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         height: 430
     },
     viewButtons: {
-        margin: 'auto',
+        marginLeft: 40,
         width: 340,
         justifyContent: 'space-evenly',
         marginTop: 30,
@@ -173,11 +173,5 @@ const styles = StyleSheet.create({
         width: 30,
         height: 38,
         resizeMode: 'contain'
-    },
-    tableauBars: {
-        border: '1px solid black',
-        display: 'flex',
-        flexDirection: 'row'
-    }
-    
+    }    
 })

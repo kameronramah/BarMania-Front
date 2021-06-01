@@ -7,8 +7,9 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native'
-import Geolocation from '@react-native-community/geolocation'
 import md5 from 'md5'
+import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions'
 
 class Connexion extends React.Component {
     constructor(props) {
@@ -17,14 +18,35 @@ class Connexion extends React.Component {
             email: '',
             mdp: '',
             latitude: '',
-            longitude: ''
+            longitude: '',
+            geocode: null,
+            errorMessage: ''
         }
         
     }
 
-    componentDidMount() {
-        Geolocation.getCurrentPosition(info => this.setState({latitude: info.coords.latitude, longitude: info.coords.longitude})) 
+    getLocationAsync = async () => {
+        Location.setGoogleApiKey('AIzaSyDiGxBLu5mbje7UF4UOzeKfNVwGkU17LGE')
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+          this.setState({
+            errorMessage: 'La permission d`accès à la localisation à été refusée',
+          })
+        }
+    
+        let location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Highest});
+        const { latitude , longitude } = location.coords
+        this.getGeocodeAsync({latitude, longitude})
+        this.setState({ latitude, longitude})
+    }
 
+    getGeocodeAsync= async (location) => {
+        let geocode = await Location.reverseGeocodeAsync(location)
+        this.setState({ geocode })
+    }
+
+    componentDidMount() {
+        this.getLocationAsync()
     }
 
     render(){
@@ -36,7 +58,7 @@ class Connexion extends React.Component {
                     "mdp": md5(this.state.mdp)
                 }
 
-                fetch("http://localhost:3001/connexion", {
+                fetch("https://glacial-bastion-48106.herokuapp.com/connexion", {
                     method: "POST",
                     headers: {
                         'Accept': 'application/json',
@@ -46,14 +68,11 @@ class Connexion extends React.Component {
                 })
                 .then( async(response) => {
                     if(response.status == 200) {
-                        const rep = await fetch(`http://localhost:3001/infosUser/${this.state.email}`)
+                        const rep = await fetch(`https://glacial-bastion-48106.herokuapp.com/infosUser/${this.state.email}`)
                         const data = await rep.json()
                         this.props.navigation.navigate('ListeBars', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: data.pseudo, email: data.email, password: data.password, idEvenement: data.idevenement})
                     }
-                    return response.json()
-                })
-                .then(function(data) {
-                    alert(data)
+                    return response
                 })
             }
             else {
@@ -90,7 +109,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 250,
         height: 160,
-        margin: 'auto',
+        marginLeft: 80,
         marginBottom: 20,
         resizeMode: 'contain'
     },
@@ -99,11 +118,11 @@ const styles = StyleSheet.create({
         height: 40,
         width: '70%',
         marginBottom: 40,
-        color: '#fff',
+        color: 'white',
         borderBottomColor: 'white',
         borderBottomWidth: 2,
-        placeholderTextColor: 'white',
-        margin: 'auto'
+        // placeholderTextColor: 'white',
+        marginLeft: 60
     },
     forgetPassword: {
         textDecorationLine: 'underline',
@@ -116,13 +135,14 @@ const styles = StyleSheet.create({
         marginTop: 120,
         width: 150,
         height: 50,
-        margin: 'auto',
+        marginLeft: 130,
         padding: 15,
         borderRadius: 40
     }, 
     btnText: {
         color: 'black',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginLeft: 20
     },
     textConnect: {
         fontSize: 17,

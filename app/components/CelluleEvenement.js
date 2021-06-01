@@ -17,7 +17,7 @@ const CelluleEvenement = (props) => {
             "nbInscrit": props.nbInscrit
         }
 
-        fetch("http://localhost:3001/inscriptionEvenement/", {
+        fetch("https://glacial-bastion-48106.herokuapp.com/inscriptionEvenement/", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -30,7 +30,7 @@ const CelluleEvenement = (props) => {
                 props.onIDEvenementChange(props.id)
                 idEvenement = props.id
             }
-            return response.json()
+            return response
         })
     }
 
@@ -41,7 +41,7 @@ const CelluleEvenement = (props) => {
             "nbInscrit": props.nbInscrit
         }
 
-        fetch("http://localhost:3001/desinscriptionEvenement/", {
+        fetch("https://glacial-bastion-48106.herokuapp.com/desinscriptionEvenement/", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -54,7 +54,7 @@ const CelluleEvenement = (props) => {
                 props.onIDEvenementChange(null)
                 idEvenement = null
             }
-            return response.json()
+            return response
         })
     }
 
@@ -66,7 +66,7 @@ const CelluleEvenement = (props) => {
                 inscription = <Text style={[styles.textRouge, {fontSize: 10}]}>DÉJÀ INSCRIT À UN ÉVÈNEMENT</Text>
             }
             else {
-                inscription = <TouchableOpacity onPress={desinscrire} style={[styles.bouton, {width: 100}]}>
+                inscription = <TouchableOpacity onPress={desinscrire} style={[styles.bouton, {width: 120}]}>
                                 <Text style={styles.textBouton}>Se désinscrire</Text>
                               </TouchableOpacity>
             }
@@ -97,15 +97,18 @@ const styles = StyleSheet.create( {
         marginTop: -35,
         justifyContent: 'center',
         textAlign: 'center',
-        border: '2px solid black',
-        borderTopWidth: '0px',
+        borderColor: 'black',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderTopWidth: 0,
         padding: 4,
         marginBottom: 35
     },
     text: {
         color: 'white',
         fontWeight: 'bold',
-        margin: 'auto'
+        marginRight: 50,
+        marginTop: 5
     },
     bouton: {
         textAlign: 'center',
@@ -116,9 +119,13 @@ const styles = StyleSheet.create( {
         borderRadius: 5,
         margin: 'auto'
     },
+    textBouton: {
+        marginLeft: 7
+    },
     textRouge: {
         color: 'red', 
         fontWeight: 'bold',
-        margin: 'auto'
+        marginTop: 5,
+        marginRight: 10
     }
 })

@@ -5,9 +5,9 @@ import Connexion from './app/components/Connexion';
 import Inscription from './app/components/Inscription';
 import ListeBars from './app/components/ListeBars';
 import Evenements from './app/components/Evenements'
-import MotdePasseOublier from './app/components/motdePasseOublier';
 import Profil from './app/components/Profil'
 import ChangerMdp from './app/components/ChangerMdp'
+import DisplayLatLng from './app/components/Map'
 
 const Stack = createStackNavigator()
 
@@ -24,7 +24,7 @@ class App extends React.Component {
             cardStyle: { backgroundColor: '#73B479' }
           }}
         >
-
+          
           <Stack.Screen
               name="Connexion"
               component={Connexion}
@@ -43,6 +43,11 @@ class App extends React.Component {
           <Stack.Screen
               name="Evenements"
               component={Evenements}
+          />
+
+          <Stack.Screen
+              name="Map"
+              component={DisplayLatLng}
           />
 
           <Stack.Screen

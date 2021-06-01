@@ -31,10 +31,12 @@ const styles = StyleSheet.create( {
     },
     cellule: {
         justifyContent: 'center',
-        fontWeight: 'bold',
         textAlign: 'center',
-        border: '2px solid black',
-        width: 124.5,
+        fontWeight: 'bold',
+        borderColor: 'black',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        width: 137.5,
         padding: 4,
         marginBottom: 35
     },

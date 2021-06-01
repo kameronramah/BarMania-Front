@@ -40,7 +40,7 @@ class Inscription extends React.Component {
                         "mdp": md5(this.state.mdp)
                     }
             
-                    fetch("http://localhost:3001/", {
+                    fetch("https://glacial-bastion-48106.herokuapp.com/", {
                         method: "POST",
                         headers: {
                             'Accept': 'application/json',
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 250,
         height: 160,
-        margin: 'auto',
+        marginLeft: 80,
         marginBottom: -10,
         resizeMode: 'contain'
     },
@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         borderBottomColor: 'white',
         borderBottomWidth: 2,
-        placeholderTextColor: 'white',
-        margin: 'auto'
+        // placeholderTextColor: 'white',
+        marginLeft: 60
     },
     button: {
         textAlign: 'center',
@@ -126,13 +126,14 @@ const styles = StyleSheet.create({
         marginTop: 30,
         width: 150,
         height: 50,
-        margin: 'auto',
+        marginLeft: 130,
         padding: 15,
         borderRadius: 40
     }, 
     btnText: {
         color: 'black',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginLeft: 20
     },
     textConnect: {
         fontSize: 17,

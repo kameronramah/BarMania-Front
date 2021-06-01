@@ -54,7 +54,7 @@ class ChangerMdp extends React.Component {
                         "email": this.state.email
                     }
 
-                    fetch("http://localhost:3001/profilPassword/", {
+                    fetch("https://glacial-bastion-48106.herokuapp.com/profilPassword/", {
                         method: "POST",
                         headers: {
                             'Accept': 'application/json',
@@ -66,7 +66,7 @@ class ChangerMdp extends React.Component {
                         if(response.status == 200) {
                             this.props.navigation.navigate('Profil', {latitude: this.state.latitude, longitude: this.state.longitude, pseudo: this.state.pseudo, email: this.state.email, password: this.state.password, idEvenement: this.state.idEvenement})
                         }
-                        return response.json()
+                        return response
                     })
                 }
                 else {
@@ -110,7 +110,8 @@ export default ChangerMdp
 
 const styles = StyleSheet.create({
     view: {
-        padding: 16
+        padding: 16,
+        marginTop: 10
     },
     back: {
         width: 25,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
         color: 'white',
         borderBottomColor: 'white',
         borderBottomWidth: 2,
-        placeholderTextColor: 'white'
+        // placeholderTextColor: 'white'
     },
     button: {
         textAlign: 'center',
@@ -143,12 +144,13 @@ const styles = StyleSheet.create({
         marginTop: 120,
         width: 150,
         height: 50,
-        margin: 'auto',
+        marginLeft: 110,
         padding: 15,
         borderRadius: 40
     },
     btnText: {
         color: 'black',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginLeft: 30
     }
 })
