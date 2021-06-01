@@ -5,16 +5,22 @@ import MapView, { Callout, MAP_TYPES, ProviderPropType } from 'react-native-maps
 
 const { width, height } = Dimensions.get('window');
 
+const ASPECT_RATIO = width / height;
+let LATITUDE = 	48.858846
+let LONGITUDE = 2.348354
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
 class DisplayLatLng extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       region: {
-        latitude: null,
-        longitude: null,
-        latitudeDelta: null,
-        longitudeDelta: null,
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
       },
       latitude: '',
       longitude: '',
@@ -38,28 +44,12 @@ class DisplayLatLng extends React.Component {
                       pseudo,
                       email,
                       password,
-                      idEvenement: new Animated.Value(idEvenement)
+                      idEvenement
                     })
         const response = await fetch(`https://glacial-bastion-48106.herokuapp.com/listebars/`)
         const data = await response.json()
         this.setState({bars: data})
     }
-
-    componentDidUpdate(prevProps) {
-      if(this.props.route.params.pseudo !== prevProps.route.params.pseudo) {
-          this.setState({pseudo: this.props.route.params.pseudo})
-      }
-      if(this.props.route.params.email !== prevProps.route.params.email) {
-          this.setState({email: this.props.route.params.email})
-      }
-      if(this.props.route.params.password !== prevProps.route.params.password) {
-          this.setState({password: this.props.route.params.password})
-      }
-      if(this.props.route.params.idEvenement !== prevProps.route.params.idEvenement) {
-          this.setState({idEvenement: this.props.route.params.idEvenement})
-      }
-      
-  }
 
 
   // onRegionChange(region) {
@@ -86,24 +76,14 @@ class DisplayLatLng extends React.Component {
       )
     }
 
-    let initialRegion = {
-      latitude: this.state.latitude,
-      longitude: this.state.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0922 * width / height
-    }
-
     return (
-
       <View style={styles.container}>
         <MapView
           provider={this.props.provider}
           ref={ref => { this.map = ref; }}
           mapType={MAP_TYPES.TERRAIN}
           style={styles.map}
-          initialRegion={
-            initialRegion
-          }
+          initialRegion={this.state.region}
         >
           <MapView.Marker
             coordinate={{
@@ -123,8 +103,8 @@ class DisplayLatLng extends React.Component {
         
         <View style={[styles.bubble, styles.latlng]}>
           <Text style={{ textAlign: 'center' }}>
-            {this.props.route.params.latitude.toPrecision(7)},
-            {this.props.route.params.longitude.toPrecision(7)}
+            {this.state.region.latitude.toPrecision(7)},
+            {this.state.region.longitude.toPrecision(7)}
           </Text>
         </View>
         <View style={styles.buttonContainer}>
